@@ -1,0 +1,6 @@
+dependencies:
+- name: gantt
+  version: 4.1.0
+  src: htmlwidgets/lib/gantt
+  script: codebase/dhtmlxgantt.js
+  style: codebase/dhtmlxgantt.css
