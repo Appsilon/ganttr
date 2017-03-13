@@ -6,3 +6,4 @@ list(
   list(id=3, text = "Just test", start_date="03-04-2013", duration=8,order=9, progress=0.8, open= TRUE)
 ) %>%
   ganttr::ganttr()
+

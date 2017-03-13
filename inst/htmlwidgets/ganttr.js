@@ -13,6 +13,12 @@ HTMLWidgets.widget({
       renderValue: function(tasks) {
         gantt.init(el);
     		gantt.parse(tasks);
+
+    		Shiny.onInputChange(el.id, gantt.serialize());
+        gantt.attachEvent("onAfterTaskAdd", function(id, e) {
+          console.log(el.id);
+      		Shiny.onInputChange(el.id, gantt.serialize());
+        });
       },
 
       resize: function(width, height) {
