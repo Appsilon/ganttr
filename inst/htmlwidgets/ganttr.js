@@ -9,14 +9,14 @@ HTMLWidgets.widget({
                             "onAfterTaskDelete", "onAfterTaskMove", "onAfterTaskUpdate",
                             "onAfterUndo", "onGanttRender", "onGanttReady", "onDataRender"];
     var send_change = function(tasks) {
-      Shiny.onInputChange(el.id, tasks);
+      Shiny && Shiny.onInputChange(el.id, tasks);
     };
 
     return {
 
       renderValue: function(tasks) {
         gantt.init(el);
-        send_change($.extend(true, {}, tasks));
+        if (typeof $ !== "undefined" && $.extend) send_change($.extend(true, {}, tasks));
         gantt.parse(tasks);
 
         EVENTS_TO_ATTACH.map(function(event_name) {
