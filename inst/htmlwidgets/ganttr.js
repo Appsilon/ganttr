@@ -6,18 +6,22 @@ HTMLWidgets.widget({
 
   factory: function(el, width, height) {
 
-    // TODO: define shared variables for this instance
+    var EVENTS_TO_ATTACH = ["onAfterTaskAdd", "onAfterBatchUpdate", "onAfterLinkAdd",
+                            "onAfterLinkDelete", "onAfterLinkUpdate", "onAfterRedo",
+                            "onAfterTaskDelete", "onAfterTaskMove", "onAfterTaskUpdate",
+                            "onAfterUndo", "onGanttRender", "onGanttReady", "onDataRender"];
+    var send_change = function() {
+      Shiny.onInputChange(el.id, gantt.serialize());
+    };
 
     return {
 
       renderValue: function(tasks) {
         gantt.init(el);
-    		gantt.parse(tasks);
+        gantt.parse(tasks);
 
-    		Shiny.onInputChange(el.id, gantt.serialize());
-        gantt.attachEvent("onAfterTaskAdd", function(id, e) {
-          console.log(el.id);
-      		Shiny.onInputChange(el.id, gantt.serialize());
+        EVENTS_TO_ATTACH.map(function(event_name) {
+          gantt.attachEvent(event_name, send_change);
         });
       },
 

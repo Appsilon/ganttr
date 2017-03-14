@@ -6,7 +6,8 @@ library(DT)
 ui <- fluidPage(
   actionButton("add_task", "add random task"),
   ganttrOutput("sample_gantt"),
-  dataTableOutput("gantt_data")
+  dataTableOutput("gantt_data"),
+  dataTableOutput("gantt_links")
 )
 
 shinyApp(ui = ui, server = shinyServer(function(input, output, session) {
@@ -24,6 +25,15 @@ shinyApp(ui = ui, server = shinyServer(function(input, output, session) {
   })
   output$sample_gantt <- renderGanttr({
      ganttr(dict$tasks)
+  })
+  output$gantt_links <- renderDataTable({
+    if (!is.null(input$sample_gantt$links)) {
+      plyr::rbind.fill(lapply(input$sample_gantt$links, function(y) {
+        as.data.frame(t(y), stringsAsFactors=F)
+      })) %>% as.data.frame %>% datatable()
+    } else {
+      NULL
+    }
   })
   output$gantt_data <- renderDataTable({
     if (!is.null(input$sample_gantt$data)) {
