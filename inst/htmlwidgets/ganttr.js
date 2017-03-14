@@ -1,7 +1,5 @@
 HTMLWidgets.widget({
-
   name: 'ganttr',
-
   type: 'output',
 
   factory: function(el, width, height) {
@@ -28,12 +26,7 @@ HTMLWidgets.widget({
         });
       },
 
-      resize: function(width, height) {
-
-        // TODO: code to re-render the widget with a new size
-
-      }
-
+      resize: function(width, height) {}
     };
   }
 });

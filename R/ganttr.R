@@ -1,21 +1,22 @@
-#' <Add Title>
+#' Gantt diagram htmlwidget
 #'
-#' <Add Description>
+#' Function presenting Gantt diagram. Pass tasks and links between them as lists of lists.
+#' Parameters are serialized and injected into dhtmlxgantt javascript library.
 #'
 #' @import htmlwidgets
 #'
 #' @export
-ganttr <- function(data, links = list(), width = NULL, height = NULL, elementId = NULL) {
+ganttr <- function(tasks, links = list(), width = NULL, height = NULL, elementId = NULL) {
 
-  # forward options using x
-  x <- list(
-    data = data,
+  # Forward options as JSON:
+  inject_as_json <- list(
+    data = tasks,
     links = links
   )
-  # create widget
+
   htmlwidgets::createWidget(
     name = 'ganttr',
-    x,
+    inject_as_json,
     width = width,
     height = height,
     package = 'ganttr',
