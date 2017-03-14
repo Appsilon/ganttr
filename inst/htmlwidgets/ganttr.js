@@ -10,18 +10,21 @@ HTMLWidgets.widget({
                             "onAfterLinkDelete", "onAfterLinkUpdate", "onAfterRedo",
                             "onAfterTaskDelete", "onAfterTaskMove", "onAfterTaskUpdate",
                             "onAfterUndo", "onGanttRender", "onGanttReady", "onDataRender"];
-    var send_change = function() {
-      Shiny.onInputChange(el.id, gantt.serialize());
+    var send_change = function(tasks) {
+      Shiny.onInputChange(el.id, tasks);
     };
 
     return {
 
       renderValue: function(tasks) {
         gantt.init(el);
+        send_change($.extend(true, {}, tasks));
         gantt.parse(tasks);
 
         EVENTS_TO_ATTACH.map(function(event_name) {
-          gantt.attachEvent(event_name, send_change);
+          gantt.attachEvent(event_name, function() {
+            send_change(gantt.serialize())
+          });
         });
       },
 
